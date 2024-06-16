@@ -1,91 +1,84 @@
-# Foundry Template [![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Foundry][foundry-badge]][foundry] [![License: MIT][license-badge]][license]
 
-[gitpod]: https://gitpod.io/#https://github.com/XueDAOTW/24-frontend-workshop-contract-template
-[gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
-[gha]: https://github.com/XueDAOTW/24-frontend-workshop-contract-template/actions
-[gha-badge]: https://github.com/XueDAOTW/24-frontend-workshop-contract-template/actions/workflows/ci.yml/badge.svg
-[foundry]: https://getfoundry.sh/
-[foundry-badge]: https://img.shields.io/badge/Built%20with-Foundry-FFDB1C.svg
-[license]: https://opensource.org/licenses/MIT
-[license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
+# 24-frontend-workshop-contract-template
 
-A Foundry-based template for developing Solidity smart contracts, with sensible defaults.
-
-## What's Inside
-
-- [Forge](https://github.com/foundry-rs/foundry/blob/master/forge): compile, test, fuzz, format, and deploy smart
-  contracts
-- [Forge Std](https://github.com/foundry-rs/forge-std): collection of helpful contracts and cheatcodes for testing
-- [PRBTest](https://github.com/PaulRBerg/prb-test): modern collection of testing assertions and logging utilities
-- [Prettier](https://github.com/prettier/prettier): code formatter for non-Solidity files
-- [Solhint Community](https://github.com/solhint-community/solhint-community): linter for Solidity code
+This is a template for the 24 frontend workshop contract.
 
 ## Getting Started
 
-Click the [`Use this template`](https://github.com/PaulRBerg/foundry-template/generate) button at the top of the page to
-create a new repository with this repo as the initial state.
-
-Or, if you prefer to install the template manually:
+1. Clone the repository and navigate to the project directory:
 
 ```sh
-$ mkdir my-project
-$ cd my-project
-$ forge init --template PaulRBerg/foundry-template
-$ pnpm install # install Solhint, Prettier, and other Node.js deps
+$ git clone https://github.com/24-hack/24-frontend-workshop-contract-template.git
+$ cd 24-frontend-workshop-contract-template
 ```
 
-If this is your first time with Foundry, check out the
-[installation](https://github.com/foundry-rs/foundry#installation) instructions.
+2. Install dependencies using your preferred package manager (`pnpm`, `npm`, or `yarn`):
 
-## Features
+   Using `pnpm`:
+   ```sh
+   $ pnpm install
+   ```
+   Using `npm`:
+   ```sh
+   $ npm install
+   ```
+   Using `yarn`:
+   ```sh
+   $ yarn install
+   ```
 
-This template builds upon the frameworks and libraries mentioned above, so for details about their specific features,
-please consult their respective documentation.
+3. Build the contracts:
 
-For example, if you're interested in exploring Foundry in more detail, you should look at the
-[Foundry Book](https://book.getfoundry.sh/). In particular, you may be interested in reading the
-[Writing Tests](https://book.getfoundry.sh/forge/writing-tests.html) tutorial.
-
-### Sensible Defaults
-
-This template comes with a set of sensible default configurations for you to use. These defaults can be found in the
-following files:
-
-```text
-├── .editorconfig
-├── .gitignore
-├── .prettierignore
-├── .prettierrc.yml
-├── .solhint.json
-├── foundry.toml
-└── remappings.txt
+```sh
+$ forge build
 ```
 
-### VSCode Integration
+4. Deploy the contracts:
 
-This template is IDE agnostic, but for the best user experience, you may want to use it in VSCode alongside Nomic
-Foundation's [Solidity extension](https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity).
+   If you did not set up a MNEMONIC environment variable, you can use the `--private-key` flag to deploy the contracts.
 
-For guidance on how to integrate a Foundry project in VSCode, please refer to this
-[guide](https://book.getfoundry.sh/config/vscode).
+   For general deployment:
+   ```sh
+   forge script script/Deploy.s.sol \
+       --rpc-url <RPC_URL> \
+       --private-key <PRIVATE_KEY> \
+       --etherscan-api-key <ETHERSCAN_API_KEY> \
+       --verify --verifier-url <VERIFIER_URL> --broadcast \
+       --sig "run()" -vvv
+   ```
 
-### GitHub Actions
+   Example using the Zircuit chain:
+   ```sh
+   forge script script/Deploy.s.sol \
+       --rpc-url zircuit \
+       --legacy \
+       --broadcast \
+       --sig "run()" -vvv
+   ```
 
-This template comes with GitHub Actions pre-configured. Your contracts will be linted and tested on every push and pull
-request made to the `main` branch.
+5. Verify the contracts:
 
-You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.yml).
+   To verify your contracts, use the following command:
 
-## Writing Tests
+   ```sh
+   forge verify-contract \
+       --verifier-url <VERIFIER_URL> \
+       <deployed-contract-address> \
+       <source-file>:<contract-name> \
+       --etherscan-api-key <ETHERSCAN_API_KEY>
+   ```
 
-To write a new test contract, you start by importing [PRBTest](https://github.com/PaulRBerg/prb-test) and inherit from
-it in your test contract. PRBTest comes with a pre-instantiated [cheatcodes](https://book.getfoundry.sh/cheatcodes/)
-environment accessible via the `vm` property. If you would like to view the logs in the terminal output you can add the
-`-vvv` flag and use [console.log](https://book.getfoundry.sh/faq?highlight=console.log#how-do-i-use-consolelog).
+   Example for Zircuit chain:
 
-This template comes with an example test contract [Foo.t.sol](./test/Foo.t.sol)
+   ```sh
+   forge verify-contract \
+       --verifier-url https://explorer.zircuit.com/api/contractVerifyHardhat \
+       <deployed-contract-address> \
+       <source-file>:<contract-name> \
+       --etherscan-api-key <ZIRCUIT_API_KEY>
+   ```
 
-## Usage
+## Common Usage
 
 This is a list of the most frequently needed commands.
 
@@ -151,14 +144,6 @@ Get a gas report:
 $ forge test --gas-report
 ```
 
-### Lint
-
-Lint the contracts:
-
-```sh
-$ pnpm lint
-```
-
 ### Test
 
 Run the tests:
@@ -172,21 +157,6 @@ Generate test coverage and output result to the terminal:
 ```sh
 $ pnpm test:coverage
 ```
-
-Generate test coverage with lcov report (you'll have to open the `./coverage/index.html` file in your browser, to do so
-simply copy paste the path):
-
-```sh
-$ pnpm test:coverage:report
-```
-
-## Notes
-
-1. Foundry uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to manage dependencies. For
-   detailed instructions on working with dependencies, please refer to the
-   [guide](https://book.getfoundry.sh/projects/dependencies.html) in the book
-2. You don't have to create a `.env` file, but filling in the environment variables may be useful when debugging and
-   testing against a fork.
 
 ## Related Efforts
 
