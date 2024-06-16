@@ -12,19 +12,17 @@ $ git clone https://github.com/24-hack/24-frontend-workshop-contract-template.gi
 $ cd 24-frontend-workshop-contract-template
 ```
 
-2. Install dependencies using your preferred package manager (`pnpm`, `npm`, or `yarn`):
+2. Install dependencies using `pnpm`:
+
+   If you do not have `pnpm` installed, you can install it using the following command:
+
+   ```sh
+   $ npm install -g pnpm
+   ```
 
    Using `pnpm`:
    ```sh
    $ pnpm install
-   ```
-   Using `npm`:
-   ```sh
-   $ npm install
-   ```
-   Using `yarn`:
-   ```sh
-   $ yarn install
    ```
 
 3. Build the contracts:
