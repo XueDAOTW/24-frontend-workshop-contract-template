@@ -1,4 +1,3 @@
-
 # 24-frontend-workshop-contract-template
 
 This is a template for the 24 frontend workshop contract.
@@ -21,6 +20,7 @@ $ cd 24-frontend-workshop-contract-template
    ```
 
    Using `pnpm`:
+
    ```sh
    $ pnpm install
    ```
@@ -36,6 +36,7 @@ $ forge build
    If you did not set up a MNEMONIC environment variable, you can use the `--private-key` flag to deploy the contracts.
 
    For general deployment:
+
    ```sh
    forge script script/Deploy.s.sol \
        --rpc-url <RPC_URL> \
@@ -46,6 +47,7 @@ $ forge build
    ```
 
    Example using the Zircuit chain:
+
    ```sh
    forge script script/Deploy.s.sol \
        --rpc-url zircuit \
@@ -71,9 +73,18 @@ $ forge build
    ```sh
    forge verify-contract \
        --verifier-url https://explorer.zircuit.com/api/contractVerifyHardhat \
-       <deployed-contract-address> \
-       <source-file>:<contract-name> \
-       --etherscan-api-key <ZIRCUIT_API_KEY>
+       <deployed-mock-erc20-address> \
+       src/MockERC20.sol:MockERC20 \
+       --etherscan-api-key <ZIRCUIT-API-KEY>
+   ```
+
+   ```sh
+   forge verify-contract \
+       --verifier-url https://explorer.zircuit.com/api/contractVerifyHardhat \
+       <deployed-xue-membership-nft-address> \
+       src/XueMembershipNFT.sol:XueMembershipNFT \
+       --etherscan-api-key <ZIRCUIT-API-KEY> \
+       --constructor-args $(cast abi-encode "constructor(string)" "https://xuedaoisgood.com/")
    ```
 
 ## Common Usage
