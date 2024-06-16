@@ -40,9 +40,6 @@ $ forge build
    ```sh
    forge script script/Deploy.s.sol \
        --rpc-url <RPC_URL> \
-       --private-key <PRIVATE_KEY> \
-       --etherscan-api-key <ETHERSCAN_API_KEY> \
-       --verify --verifier-url <VERIFIER_URL> --broadcast \
        --sig "run()" -vvv
    ```
 
